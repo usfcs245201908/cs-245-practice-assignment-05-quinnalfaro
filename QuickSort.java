@@ -1,14 +1,37 @@
 public class QuickSort implements SortingAlgorithm {
-	
+
 	public void sort(int [] a){
-		for(int i = 1; i < a.length; i++){
-			int key = a[i];
-			int j = i - 1;
-			while(j >= 0 && key < a[j]){
-				a[j + 1] = a[j];
-				j --;
+		sort(a, 0, a.length - 1);
+	}
+
+	public void sort(int [] a, int low, int high){
+
+		if (low < high){
+			int index = part(a, low, high);
+
+
+			sort(a, low, index - 1);
+			sort(a, index + 1, high);
+		}
+	}
+
+	public int part(int [] a, int low, int high){
+
+		int pivot = a[high];
+		int i = (low - 1);
+
+		for(int j = low; j < high; j++){
+			if (a[j] < pivot){
+				i++;
+				int temp = a[i];
+				a[i] = a[j];
+				a[j] = temp;
 			}
-			a[j + 1] = key;
-		}	
-	}		
+		}
+
+		int temp = a[i + 1];
+		a[i + 1] = a[high];
+		a[high] = temp;
+		return i + 1;
+	}
 }
